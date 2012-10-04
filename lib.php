@@ -1911,7 +1911,7 @@ class enrol_lmb_plugin extends enrol_plugin {
                         }
                     }
 
-                    if ($this->get_config('includetelephone') && $this->get_config('forcetelephone')) {
+                    if ($this->get_config('includetelephone') && $this->get_config('forcetelephone') && isset($lmbperson->telephone)) {
                         $moodleuser->phone1 = $lmbperson->telephone;
                     }
 
@@ -1979,7 +1979,7 @@ class enrol_lmb_plugin extends enrol_plugin {
                     }
 
                     $moodleuser->auth = $this->get_config('auth');
-                    if ($this->get_config('includetelephone')) {
+                    if ($this->get_config('includetelephone') && isset($lmbperson->telephone)) {
                         $moodleuser->phone1 = $lmbperson->telephone;
                     }
 
