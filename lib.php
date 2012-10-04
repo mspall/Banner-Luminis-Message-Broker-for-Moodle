@@ -1916,7 +1916,9 @@ class enrol_lmb_plugin extends enrol_plugin {
                     }
 
                     if ($this->get_config('includeaddress') && $this->get_config('forceaddress')) {
-                        $moodleuser->address = $lmbperson->adrstreet;
+                        if (isset($lmbperson->adrstreet)) {
+                            $moodleuser->address = $lmbperson->adrstreet;
+                        }
 
                         if ($this->get_config('defaultcity') == 'standardxml') {
                             if ($lmbperson->locality) {
@@ -1929,8 +1931,6 @@ class enrol_lmb_plugin extends enrol_plugin {
                         } else if ($this->get_config('defaultcity') == 'standard') {
                             $moodleuser->city = $this->get_config('standardcity');
                         }
-                    } else {
-                        $moodleuser->address = '';
                     }
 
                     if (enrol_lmb_compare_objects($moodleuser, $oldmoodleuser) || ($this->get_config('customfield1mapping')
@@ -1986,8 +1986,6 @@ class enrol_lmb_plugin extends enrol_plugin {
                     if ($this->get_config('includeaddress')) {
                         if (isset ($lmbperson->adrstreet)) {
                             $moodleuser->address = $lmbperson->adrstreet;
-                        } else {
-                            $moodleuser->address = '';
                         }
 
                         if ($this->get_config('defaultcity') == 'standardxml') {
@@ -2002,8 +2000,6 @@ class enrol_lmb_plugin extends enrol_plugin {
                             $moodleuser->city = $this->get_config('standardcity');
                         }
 
-                    } else {
-                        $moodleuser->address = '';
                     }
 
                     $moodleuser->country = $CFG->country;
