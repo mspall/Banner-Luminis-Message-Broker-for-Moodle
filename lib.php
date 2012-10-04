@@ -1928,7 +1928,9 @@ class enrol_lmb_plugin extends enrol_plugin {
                                 $moodleuser->city = $this->get_config('standardcity');
                             }
                         } else if ($this->get_config('defaultcity') == 'xml') {
-                            $moodleuser->city = $lmbperson->locality;
+                            if (isset($lmbperson->locality)) {
+                                $moodleuser->city = $lmbperson->locality;
+                            }
                         } else if ($this->get_config('defaultcity') == 'standard') {
                             $moodleuser->city = $this->get_config('standardcity');
                         }
@@ -1996,7 +1998,9 @@ class enrol_lmb_plugin extends enrol_plugin {
                                 $moodleuser->city = $this->get_config('standardcity');
                             }
                         } else if ($this->get_config('defaultcity') == 'xml') {
-                            $moodleuser->city = $lmbperson->locality;
+                            if (isset($lmbperson->locality)) {
+                                $moodleuser->city = $lmbperson->locality;
+                            }
                         } else if ($this->get_config('defaultcity') == 'standard') {
                             $moodleuser->city = $this->get_config('standardcity');
                         }
