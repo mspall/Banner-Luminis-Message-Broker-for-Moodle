@@ -466,7 +466,7 @@ function enrol_lmb_retry_term_enrolments($termid) {
         $i = 1;
         foreach ($persons as $person) {
             print $i." of ".$count.":".$person->personsourcedid;
-            $status = $enrolmod->restore_user_enrolments($person->personsourcedid) && $status;
+            $status = $enrolmod->restore_user_term_enrolments($person->personsourcedid, $termid) && $status;
             print "<br>\n";
             $i++;
         }
