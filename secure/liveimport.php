@@ -105,12 +105,12 @@ if (!$xml) {
 
 
 $xmlstorage = new stdClass();
-$xmlstorage->headers = addslashes($headers);
+$xmlstorage->headers = $headers;
 $xmlstorage->timereceived = time();
 
 // Place the XML if not set to 'Never'.
 if ($config->storexml != 'never') {
-    $xmlstorage->xml = addslashes($xml);
+    $xmlstorage->xml = $xml;
 }
 
 set_config('lastlmbmessagetime', time(), 'enrol_lmb');
