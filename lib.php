@@ -2863,6 +2863,29 @@ class enrol_lmb_plugin extends enrol_plugin {
 
 
     /**
+     * For a given person id number and a given term, run all enrol and unenrol records in
+     * the local lmb database where succeeded = 0
+     *
+     * @param string $idnumber the ims/xml id of a person
+     * @param int $term the ims/xml id of a term
+     * @return bool success or failure of the enrolments
+     */
+    public function restore_user_term_enrolments($idnumber, $term) {
+        global $DB;
+
+        $status = true;
+
+        if ($enrols = $DB->get_records('enrol_lmb_enrolments', array('personsourcedid' => $idnumber, 'term' => $term, 'succeeded' => 0))) {
+            foreach ($enrols as $enrol) {
+                $logline = '';
+                $status = $this->process_enrolment_log($enrol, $logline) && $status;
+            }
+        }
+        return $status;
+    }
+
+
+    /**
      * Assigns a moodle role to a user in the provided course
      *
      * @param int $roleid id of the moodle role to assign
