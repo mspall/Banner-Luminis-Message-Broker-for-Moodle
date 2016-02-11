@@ -81,10 +81,10 @@ if (!$xml) {
 // Place the XML if not set to 'Never'.
 if ($config->storexml != 'never') {
     $xmlstorage = new stdClass();
-    $xmlstorage->headers = addslashes($headers);
+    $xmlstorage->headers = $headers;
     $xmlstorage->timereceived = time();
 
-    $xmlstorage->xml = addslashes($xml);
+    $xmlstorage->xml = $xml;
     $xmlstorage->id = $DB->insert_record('enrol_lmb_raw_xml', $xmlstorage, true);
 
 }
