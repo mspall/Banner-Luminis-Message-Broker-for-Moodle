@@ -1965,7 +1965,11 @@ class enrol_lmb_plugin extends enrol_plugin {
                     }
 
                     if ($this->get_config('forceemail')) {
-                        $moodleuser->email = $lmbperson->email;
+                        if ($this->get_config('ignoreemailcase')) {
+                            $moodleuser->email = strtolower($lmbperson->email);
+                        } else {
+                            $moodleuser->email = $lmbperson->email;
+                        }
                     }
 
                     if ($this->get_config('includetelephone') && $this->get_config('forcetelephone')) {
