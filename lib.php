@@ -1842,6 +1842,10 @@ class enrol_lmb_plugin extends enrol_plugin {
         }
         if (isset($person->email)) {
             $lmbperson->email = $person->email;
+        } else {
+            if (isset($person->username)) {
+                $lmbperson->email = "$person->username" . '@isu.edu';
+            }
         }
         if (isset($person->username)) {
             $lmbperson->username = $person->username;
