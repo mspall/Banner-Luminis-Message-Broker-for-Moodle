@@ -1888,6 +1888,10 @@ class enrol_lmb_plugin extends enrol_plugin {
         }
         if (isset($person->email)) {
             $lmbperson->email = $person->email;
+        } else {
+            if (isset($person->username)) {
+                $lmbperson->email = "$person->username" . '@isu.edu';
+            }
         }
         if (isset($person->username)) {
             $lmbperson->username = $person->username;
@@ -2025,7 +2029,11 @@ class enrol_lmb_plugin extends enrol_plugin {
                     }
 
                     if ($this->get_config('forceemail')) {
-                        $moodleuser->email = $lmbperson->email;
+                        if ($this->get_config('ignoreemailcase')) {
+                            $moodleuser->email = strtolower($lmbperson->email);
+                        } else {
+                            $moodleuser->email = $lmbperson->email;
+                        }
                     }
 
                     if ($this->get_config('includetelephone') && $this->get_config('forcetelephone')) {
@@ -2904,6 +2912,29 @@ class enrol_lmb_plugin extends enrol_plugin {
 
         }
 
+        return $status;
+    }
+
+
+    /**
+     * For a given person id number and a given term, run all enrol and unenrol records in
+     * the local lmb database where succeeded = 0
+     *
+     * @param string $idnumber the ims/xml id of a person
+     * @param int $term the ims/xml id of a term
+     * @return bool success or failure of the enrolments
+     */
+    public function restore_user_term_enrolments($idnumber, $term) {
+        global $DB;
+
+        $status = true;
+
+        if ($enrols = $DB->get_records('enrol_lmb_enrolments', array('personsourcedid' => $idnumber, 'term' => $term, 'succeeded' => 0))) {
+            foreach ($enrols as $enrol) {
+                $logline = '';
+                $status = $this->process_enrolment_log($enrol, $logline) && $status;
+            }
+        }
         return $status;
     }
 
